@@ -1,8 +1,12 @@
-from xlrd import *
-import xlwt
+import xlrd as xl
+import os
 
+dir0 = os.getcwd()
+pf = os.path.join(dir0,'Data.xlsx')
+pf0 = pf
+    
 # открыть ексель файл и взять первый лист
-F = open_workbook('Data.xlsx')
+F = xl.open_workbook(pf)
 FSht = F.sheet_by_index(0)
 
 # количество строк в файле
@@ -25,16 +29,20 @@ for Loc in Llist:
 # + добавим в список кол-во строк как конец файла. 
 LLocID.append(N)
 
+for i in LLocInfo:
+    i[0]=int(i[0])
+
 # Формируем список с инфомрацией о квестах
 LQInfo = []
 LocQuests = []
 for i in range(len(LLocID)-1):
 #     Запишем файл с информацией о Локации
+    LocatePart = ['LID', 'LName', 'LHello', 'LVar']
+    S=''
+    for ii in range(4):
+        S+=LocatePart[ii]+'={'+str(LLocInfo[i][ii])+'}\n'
     with open('Scripts/SL{}.qs'.format(i),'w', encoding='utf-8') as SL:
-        SL.write('LID={'+str(int(LLocInfo[i][0]))+'}\n'+
-                 'LName={'+str(LLocInfo[i][1])+'}\n'+
-                 'LHello={'+str(LLocInfo[i][2])+'}\n'+
-                 'LVar={'+str(LLocInfo[i][3])+'}\n')
+        SL.write(S)
     
 #     срез столбца с номерами квестов и их список
     Slise1 = FSht.col_values(4)[LLocID[i] : LLocID[i+1]]
@@ -43,15 +51,15 @@ for i in range(len(LLocID)-1):
     for ii in range(len(Slise)):
 #         запись информации о квесте в файл. Для удобства всё записываеться с [] или {}
 #         (В эффектах пишется команда, которую можно вызвать, а Var словари)
-        QIID = FSht.col_values(4).index(ii, LLocID[i])
+        QIID = FSht.col_values(4).index(Slise[ii], LLocID[i])
         A=FSht.row_values(QIID)[4:9]
+        A[0]=int(A[0])
+        QuestPart = ['QID', 'QCheck', 'QText', 'QEffect', 'QVar']
+        S=''
+        for iii in range(5):
+            S+=QuestPart[iii]+'={'+str(A[iii])+'}\n'
         with open('Scripts/SL{}.qs'.format(i),'a', encoding='utf-8') as SL:
-            SL.write('\\Quest\n'+
-                     'QID={'+str(int(A[0]))+'}\n'+
-                     'QCheck={'+str(A[1])+'}\n'+
-                     'QText={'+str(A[2])+'}\n'+
-                     'QEffect=['+str(A[3])+']\n'+
-                     'QVar={'+str(A[4])+'}\n')
+            SL.write('\\Quest\n'+S)
 #         далее найдём индексы квестов, чтобы понять где искать варианты ответов
         Qind = FSht.col_values(4).index(Slise[ii],LLocID[i])
         if ii+1 == len(Slise):
@@ -78,4 +86,5 @@ for i in range(len(LLocID)-1):
         LQInfo.append([A, AnsList.copy()])
     LocQuests.append(LQInfo.copy())
     LQInfo = []    
+    
     

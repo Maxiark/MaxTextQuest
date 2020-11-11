@@ -6,7 +6,7 @@ LVar={}
 QID={0}
 QCheck={}
 QText={Чтож. Поздравляю, ваш скелет будет кому-то красивым украшением) }
-QEffect=[P.Dead()]
+QEffect={P.Dead()}
 QVar={}
 \qa {1} 	qatext={Нееет}
 qacheck=[] 	qn={1.0}
@@ -14,7 +14,7 @@ qacheck=[] 	qn={1.0}
 QID={1}
 QCheck={}
 QText={Черти решили ещё немного над вами поржать и дают ещё один шанс. Повеселите их)}
-QEffect=[Reset()]
+QEffect={Reset()}
 QVar={}
 \qa {1} 	qatext={Ура}
 qacheck=[] 	qn={1-0}
