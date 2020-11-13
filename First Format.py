@@ -42,7 +42,8 @@ for i in range(len(LLocID)-1):
     S=''
     for ii in range(4):
         S+=LocatePart[ii]+'=['+str(LLocInfo[i][ii])+']\n'
-    with open(os.path.join(pf1,'SL{}.qs'.format(i)),'w', encoding='utf-8') as SL:
+    with open(os.path.join(pf1,'SL{}.qs'.format(i)),'w',
+              encoding='utf-8') as SL:
         SL.write(S)
     
 #     срез столбца с номерами квестов и их список
@@ -50,7 +51,7 @@ for i in range(len(LLocID)-1):
     Slise = list(filter(lambda x: x!='', Slise1))
     
     for ii in range(len(Slise)):
-#         запись информации о квесте в файл. Для удобства всё записываеться с [] или {}
+#         запись информации о квесте в файл. 
 #         (В эффектах пишется команда, которую можно вызвать, а Var словари)
         QIID = FSht.col_values(4).index(Slise[ii], LLocID[i])
         A=FSht.row_values(QIID)[4:9]
@@ -59,9 +60,10 @@ for i in range(len(LLocID)-1):
         S=''
         for iii in range(5):
             S+=QuestPart[iii]+'=['+str(A[iii])+']\n'
-        with open(os.path.join(pf1,'SL{}.qs'.format(i)),'a', encoding='utf-8') as SL:
+        with open(os.path.join(pf1,'SL{}.qs'.format(i)),'a',
+                  encoding='utf-8') as SL:
             SL.write('\\Quest\n'+S)
-#         далее найдём индексы квестов, чтобы понять где искать варианты ответов
+#         далее найдём индексы квестов, где искать варианты ответов
         Qind = FSht.col_values(4).index(Slise[ii],LLocID[i])
         if ii+1 == len(Slise):
             Qind2 = LLocID[i+1]
@@ -78,7 +80,8 @@ for i in range(len(LLocID)-1):
             AnI=FSht.row_values(AnID)[9:13]
             
             AnsList.append(AnI)
-            with open(os.path.join(pf1,'SL{}.qs'.format(i)),'a', encoding='utf-8') as SL:
+            with open(os.path.join(pf1,'SL{}.qs'.format(i)),'a',
+                      encoding='utf-8') as SL:
                 SL.write('\\qa ['+str(int(AnI[0]))+'] \t'+
                          'qatext=['+str(AnI[1])+']\n'+
                          'qacheck=['+str(AnI[2])+'] \t'+

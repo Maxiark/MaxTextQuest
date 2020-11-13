@@ -361,7 +361,7 @@ try:
             if path == '':
                 pf = pf0
             path2 = os.path.join(path,'SL0.qs')
-            # Проверка, что в новом пути содержится хотя бы нулевой сценарий: SL0.qs
+            # Проверка, что в новом пути хотя бы нулевой сценарий: SL0.qs
             if os.path.isfile(path2): 
                 pf = path
             else:
@@ -416,14 +416,17 @@ try:
                 self.Curent_Locate = L
                 self.Curent_Quest = Q
                 with open(os.path.join(dir0, 'log.txt'),'a') as log_e:
-                    log_e.write('ok, set Quest:'+str(LNum)+' - '+str(QNum)+'\n')
+                    log_e.write('ok, set Quest:'+str(LNum)+
+                                ' - '+str(QNum)+'\n')
                 
     #                 Применение эффектов при старте квеста. 
                 for eff in self.Curent_Quest.Effects:
                     if eff != '':
                         exec(eff.strip())
-                        with open(os.path.join(dir0, 'log.txt'),'a') as log_e:
-                            log_e.write('\t\t Effects now: '+ eff.strip()+'\n')
+                        with open(os.path.join(dir0, 'log.txt'),
+                                  'a') as log_e:
+                            log_e.write('\t\t Effects now: '+
+                                        eff.strip()+'\n')
                         
     #                 Обновление информации в окне:
                 self.SetInfo()
