@@ -3,6 +3,7 @@ import os
 
 dir0 = os.getcwd()
 pf = os.path.join(dir0,'Data.xlsx')
+pf1 = os.path.join(dir0,'Scripts')
 pf0 = pf
     
 # открыть ексель файл и взять первый лист
@@ -18,7 +19,7 @@ Llist.remove('')
 print('Локации: ', Llist)
 Llist.sort()
 
-# список номеров строк локаций и извлечение информации о них (LocInfo), LLocInfo = List of LocInfo
+# список номеров строк локаций и извлечение информации о них
 LLocID = []
 LLocInfo = []
 for Loc in Llist:
@@ -40,8 +41,8 @@ for i in range(len(LLocID)-1):
     LocatePart = ['LID', 'LName', 'LHello', 'LVar']
     S=''
     for ii in range(4):
-        S+=LocatePart[ii]+'={'+str(LLocInfo[i][ii])+'}\n'
-    with open('Scripts/SL{}.qs'.format(i),'w', encoding='utf-8') as SL:
+        S+=LocatePart[ii]+'=['+str(LLocInfo[i][ii])+']\n'
+    with open(os.path.join(pf1,'SL{}.qs'.format(i)),'w', encoding='utf-8') as SL:
         SL.write(S)
     
 #     срез столбца с номерами квестов и их список
@@ -57,8 +58,8 @@ for i in range(len(LLocID)-1):
         QuestPart = ['QID', 'QCheck', 'QText', 'QEffect', 'QVar']
         S=''
         for iii in range(5):
-            S+=QuestPart[iii]+'={'+str(A[iii])+'}\n'
-        with open('Scripts/SL{}.qs'.format(i),'a', encoding='utf-8') as SL:
+            S+=QuestPart[iii]+'=['+str(A[iii])+']\n'
+        with open(os.path.join(pf1,'SL{}.qs'.format(i)),'a', encoding='utf-8') as SL:
             SL.write('\\Quest\n'+S)
 #         далее найдём индексы квестов, чтобы понять где искать варианты ответов
         Qind = FSht.col_values(4).index(Slise[ii],LLocID[i])
@@ -77,14 +78,12 @@ for i in range(len(LLocID)-1):
             AnI=FSht.row_values(AnID)[9:13]
             
             AnsList.append(AnI)
-            with open('Scripts/SL{}.qs'.format(i),'a', encoding='utf-8') as SL:
-                SL.write('\\qa {'+str(int(AnI[0]))+'} \t'+
-                         'qatext={'+str(AnI[1])+'}\n'+
+            with open(os.path.join(pf1,'SL{}.qs'.format(i)),'a', encoding='utf-8') as SL:
+                SL.write('\\qa ['+str(int(AnI[0]))+'] \t'+
+                         'qatext=['+str(AnI[1])+']\n'+
                          'qacheck=['+str(AnI[2])+'] \t'+
-                         'qn={'+str(AnI[3])+'}\n')
+                         'qn=['+str(AnI[3])+']\n')
         
         LQInfo.append([A, AnsList.copy()])
     LocQuests.append(LQInfo.copy())
-    LQInfo = []    
-    
-    
+    LQInfo = []

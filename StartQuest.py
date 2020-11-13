@@ -138,7 +138,7 @@ try:
             except Exception as e:
                 print(e)
                 self.CMD_EL.config(text=e)
-                with open(dir0+'log.txt','a') as log_e:
+                with open(os.path.join(dir0, 'log.txt'),'a') as log_e:
                     log_e.write('error: '+str(e)+'\n')
             else:
                 self.CMD_EL.config(text='no error')
@@ -180,21 +180,25 @@ try:
             self.NPB['value']=100
             self.NPB.grid(row=0,column=2,sticky='WE')
     #             Значок сердца
-            self.HeartLb = ttk.Label(self.HealthFr,text='\u2665 Здоровье \u2665',
+            self.HeartLb = ttk.Label(self.HealthFr,
+                                     text='\u2665 Здоровье \u2665',
                                      font='Arial 13 bold italic',
-                                     foreground='gray0', background='RoyalBlue2')
+                                     foreground='gray0',
+                                     background='RoyalBlue2')
             self.HeartLb.grid(row=0, column=0, padx=1, ipady=0, pady=2)
             
     #             Уровень здоровья
-            self.HealthLb = ttk.Label(self.HealthFr,text='100',
+            self.HealthLb = ttk.Label(self.HealthFr, text='100',
                                       font='Arial 13 bold italic',
-                                      foreground='gray0', background='RoyalBlue2')
+                                      foreground='gray0',
+                                      background='RoyalBlue2')
             self.HealthLb.grid(row=0, column=1)
             
             
             self.InventoryFr = Frame(self.StFr, NameStyle='InventoryFr',
                                      bg='gold', cols=[0,2],
-                                     grids=[1,0], stick='wes', pdx=5, pdy=2)
+                                     grids=[1,0], stick='wes',
+                                     pdx=5, pdy=2)
             
     #             Значок инструментов
             self.InstLb = ttk.Label(self.InventoryFr,text='\u2692 Вещи: ',
@@ -222,9 +226,11 @@ try:
                                         grids=[1,2], stick='n',
                                         pdx=20, pdy=10)
             
-            self.ButStop = ttk.Button (self.But_Stop_Frame,text='Выйти из игры.',
+            self.ButStop = ttk.Button (self.But_Stop_Frame,
+                                       text='Выйти из игры.',
                                        command=lambda: self.Stop())
-            self.ButConsole = ttk.Button (self.But_Stop_Frame,text='Console',
+            self.ButConsole = ttk.Button (self.But_Stop_Frame,
+                                          text='Console',
                                           command=lambda: self.TopBar())
             
             self.ButConsole.grid(row=0, sticky='WE')
@@ -238,10 +244,11 @@ try:
     #             фрейм для найстройки пути к сценариям
             self.SettingFr = Frame(self.root, grids=[1,1],cols=[0,1])
             
-            self.PathLb0 = ttk.Label(self.root,text='Настройки пути к сценариям')
+            self.PathLb0 = ttk.Label(self.root,
+                                     text='Настройки пути к сценариям')
             self.PathLb0.grid(row=0, column=1, sticky='n', pady=5)
             
-            self.PathLb = ttk.Label(self.SettingFr,text='Текущий путь:')
+            self.PathLb = ttk.Label(self.SettingFr, text='Текущий путь:')
             self.PathLb.grid(row=0, column=0)
             
             global pf
@@ -249,13 +256,15 @@ try:
             if len(self.pfl)<3:
                 self.pfs=str(pf)
             else:
-                self.pfs='...{0}/{1}'.format(str(self.pfl[-2]),str(self.pfl[-1]))
+                self.pfs='...{0}/{1}'.format(str(self.pfl[-2]),
+                                             str(self.pfl[-1]))
             
             self.PathLb2 = ttk.Label(self.SettingFr,text=self.pfs)
             self.PathLb2.grid(row=0,column=1, pady=5, padx=5)
             
     #             кнопка установки пути
-            self.But_Set_Path = ttk.Button (self.SettingFr,text='Выбрать папку',
+            self.But_Set_Path = ttk.Button (self.SettingFr,
+                                            text='Выбрать папку',
                                             command=lambda: self.SetPath())
             self.But_Set_Path.grid(column=0,row=1, columnspan=2)
             
@@ -276,14 +285,16 @@ try:
                                          grids=[1,0], stick='EWN', bg='navy')
             
     #             Тексты названия комнаты, текст заданий, вариантов действий
-            self.WelcomeLb = ttk.Label(self.RoomInfo,text = 'Приветствие локации',
+            self.WelcomeLb = ttk.Label(self.RoomInfo,
+                                       text = 'Приветствие локации',
                                        background='navy', foreground='yellow',
                                        font='Arial 10 italic')
             self.WelcomeLb.grid(row=0, pady=5, padx=5, sticky='nwe')
             
             self.TextQuestLb = ttk.Label(self.RoomInfo,text= 'Текст квеста',
                                          width=77, background='navy',
-                                         foreground='yellow', font='Arial 12 bold')
+                                         foreground='yellow',
+                                         font='Arial 12 bold')
             self.TextQuestLb.grid(row=1, padx=5, pady=10, sticky='we')
             
             self.AnsListLb = ttk.Label(self.AnswerFrame, background='navy',
@@ -297,11 +308,13 @@ try:
             self.AnsEntry.grid(row=1, column=0, sticky='w', padx=10)
             
             self.But_Answer = ttk.Button (self.AnswerFrame,text='Выполнить',
-                                          command=lambda: self.AnswerEnter(self.AnsEntry.get()))
+                                          command=lambda:
+                                          self.AnswerEnter(self.AnsEntry.get()))
             self.But_Answer.grid(column=1, row=1, sticky='w', pady=5)
                     
     #             возможность ввода через Enter
-            self.AnsEntry.bind('<Return>', lambda event: self.AnswerEnter(self.AnsEntry.get()))
+            self.AnsEntry.bind('<Return>', lambda event:
+                               self.AnswerEnter(self.AnsEntry.get()))
             
     #         Инструкция
             self.ManualFr = Frame(self.GameFrame, cols=[0,1],
@@ -360,7 +373,7 @@ try:
                                    'оставьте поле пустым (по умолчанию)')
                 pf = pf0
                 
-            with open(dir0+'log.txt','a') as log_e:
+            with open(os.path.join(dir0, 'log.txt'),'a') as log_e:
                 log_e.write('path to script: '+str(pf)+'\n')
             
     #             вывод в строку пути к файлам
@@ -368,7 +381,8 @@ try:
             if len(self.pfl)<3:
                 self.pfs=str(pf)
             else:
-                self.pfs='...{0}/{1}'.format(str(self.pfl[-2]),str(self.pfl[-1]))
+                self.pfs='...{0}/{1}'.format(str(self.pfl[-2]),
+                                             str(self.pfl[-1]))
             
             self.PathLb2['text'] = self.pfs
             Reset()
@@ -376,11 +390,13 @@ try:
     #         запуск сценария (номер локации, номер квеста в ней)
         def Start(self, LNum, QNum):
             global LL
-    #             дополнительные переменный для нормальной работы команд из сценария (P,L,Q)
+    #    дополнительные переменный для работы команд из сценария (P,L,Q)
             P = self.P
-            NextLocate = list(filter(lambda x: int(x.ID) == int(LNum), LL))[0]
+            NextLocate = list(filter(lambda x: int(x.ID) == int(LNum),
+                                     LL))[0]
             L = NextLocate
-            NextQuest = list(filter(lambda x: int(x.ID) == int(QNum), L.Quests_list))[0]
+            NextQuest = list(filter(lambda x: int(x.ID) == int(QNum),
+                                    L.Quests_list))[0]
             Q = NextQuest
             
     #             проверка наличия условий для запуска данного скрипта
@@ -388,25 +404,25 @@ try:
             for check in Q.CheckList:
                 if check != '':
                     if eval(check[:check.index(':')]) == False:
-    #                         выполнение иного квеста, если проверка не пройдена:
+    #                   выполнение иного квеста, если проверка не пройдена:
                         eval('self.'+check[check.index(':')+1:].strip())
                         g=1
                     
-    #       если условий нет или проверка пройдена, то продолжаем запускать этот квест. 
+    #       если условий нет или проверка пройдена, то запускать этот квест. 
             if g == 0:
     #                 счётчик вызова данного квеста
                 Q.count += 1
     #                 установка данного квеста как текущего
                 self.Curent_Locate = L
                 self.Curent_Quest = Q
-                with open(dir0+'log.txt','a') as log_e:
+                with open(os.path.join(dir0, 'log.txt'),'a') as log_e:
                     log_e.write('ok, set Quest:'+str(LNum)+' - '+str(QNum)+'\n')
                 
     #                 Применение эффектов при старте квеста. 
                 for eff in self.Curent_Quest.Effects:
                     if eff != '':
                         exec(eff.strip())
-                        with open(dir0+'log.txt','a') as log_e:
+                        with open(os.path.join(dir0, 'log.txt'),'a') as log_e:
                             log_e.write('\t\t Effects now: '+ eff.strip()+'\n')
                         
     #                 Обновление информации в окне:
@@ -426,10 +442,10 @@ try:
                 P.Dead()
                 self.Start(0,0)
             
-    #       применение эффекта Токсин - снижение здоровья на 1 каждое действие. 
+    #       применение эффекта Токсин - снижение здоровья на каждое действие. 
             if 'Toxin' in P.Effects:
                 P.Health -= 1
-    #       Установка шкалы здоровья. А также моргание красным цветом для визуальности. 
+    #       Установка шкалы здоровья. А также моргание красным цветом. 
             if self.NPB['value'] != self.P.Health:
                 self.NPB['value'] = self.P.Health
                 self.NPB['style']="red.Horizontal.TProgressbar"
@@ -451,8 +467,8 @@ try:
             self.CurentAnsList = []
     #             проверка доступности варианта
             for Ans1 in self.Curent_Quest.AnsName:
-                CheckCond = self.Curent_Quest.AnsCheck[
-                            self.Curent_Quest.AnsName.index(Ans1)].replace('"','\'')
+                ians = self.Curent_Quest.AnsName.index(Ans1)
+                CheckCond = self.Curent_Quest.AnsCheck[ians].replace('"','\'')
                 if CheckCond == '':
                     S+=str(n)+'. '+Ans1+'\n'
                     n+=1
@@ -483,7 +499,8 @@ try:
     #             проверка численного ввода варианта
             elif ans.isdigit():
                 if int(ans) in range(1,len(self.CurentAnsList)+1):
-                    qi = self.Curent_Quest.AnsName.index(self.CurentAnsList[int(ans)-1])
+                    elem = self.CurentAnsList[int(ans)-1]
+                    qi = self.Curent_Quest.AnsName.index(elem)
                     
     #                 если варианта нет, то вывод ошибки. 
                 else:
@@ -508,22 +525,24 @@ try:
     #                 проверка на пересылку в другую локацию (другой сценарий)
                 if '-' in qnid:
                     LocID = int(qnid[:qnid.index('-')])
-    #                     print(LocID, list(filter(lambda x: x.ID == LocID, LL)), [x.ID for x in LL])
-                    NextLocate = list(filter(lambda x: int(x.ID) == int(LocID), LL))[0]
+                    NextLocate = list(filter(lambda x:
+                                             int(x.ID) == int(LocID), LL))[0]
                     self.Curent_Locate = NextLocate
                     qnid = int(qnid[qnid.index('-')+1:])
-                    NextQuest = list(filter(lambda x: int(x.ID) == int(qnid), self.Curent_Locate.Quests_list))[0]
+                    NextQuest = list(filter(lambda x: int(x.ID) == int(qnid),
+                                            self.Curent_Locate.Quests_list))[0]
                     self.Curent_Quest = NextQuest
                     
                     
     #                 если квест в этой локации:
                 else:
                     qnid = int(qnid.replace('.0', ''))
-                    with open(dir0+'log.txt','w') as log_e:
+                    with open(os.path.join(dir0, 'log.txt'),'w') as log_e:
                         log_e.write('ok, go to QID:'+str(qnid)+'\n')
                     
     #                     установка нужного квеста текущим:
-                    NextQuest = list(filter(lambda x: x.ID == qnid, self.Curent_Locate.Quests_list))[0]
+                    NextQuest = list(filter(lambda x: x.ID == qnid,
+                                            self.Curent_Locate.Quests_list))[0]
                     self.Curent_Quest = NextQuest
                     
     #                 запуск найденного квеста
@@ -535,7 +554,7 @@ try:
             Reset()
             self.Start(1,0)
         
-    #         Класс игрока. Вообще используется 1, но можно добавить профили. 
+    #   Класс игрока. Вообще используется 1, но можно добавить профили. 
     class Player:
         def __init__(self, Name='Безымянный'):
             self.Name = Name
@@ -562,12 +581,17 @@ try:
     #             Класс квеста (текущих заданий в локации)
     class Quest:
         def __init__(self, info, answers):
-            self.ID = int(info[info.find('QID={')+5:info.find('}',info.find('QID={'))])
-            self.CheckList = list(info[info.find('QCheck={')+8 : info.find('}',info.find('QCheck={'))].split(';'))
-            self.Text = info[info.find('QText={')+7 : info.find('}',info.find('QText={'))]
-            self.Effects = (info[info.find('QEffect={')+9:info.find('}',info.find('QEffect={'))]).split(';')
+            self.ID = int(info[info.find('QID=[')+5:info.find(']',
+                               info.find('QID=['))])
+            self.CheckList = list(info[info.find('QCheck=[')+8 : info.find(']',
+                                       info.find('QCheck=['))].split(';'))
+            self.Text = info[info.find('QText=[')+7 : info.find(']',
+                             info.find('QText=['))]
+            self.Effects = (info[info.find('QEffect=[')+9:info.find(']',
+                                 info.find('QEffect=['))]).split(';')
             self.count = 0
-            self.Var = (info[info.find('QVar={')+6 : info.find('}', info.find('QVar='))])
+            self.Var = (info[info.find('QVar=[')+6 : info.find(']',
+                             info.find('QVar=['))])
             if self.Var == '':
                 self.Var = {}
             else:
@@ -582,9 +606,12 @@ try:
             self.AnsCheck = []
             self.AnsNextQ = []
             for ans in answers:
-                self.AnsName.append(ans[ans.find('qatext={')+8 : ans.find('}', ans.find('qatext={'))].upper())
-                self.AnsCheck.append(ans[ans.find('qacheck=[')+9 : ans.find(']', ans.find('qacheck=['))])
-                self.AnsNextQ.append(str(ans[ans.find('qn={')+4 : ans.find('}', ans.find('qn={'))]))
+                self.AnsName.append(ans[ans.find('qatext=[')+8 : ans.find(']',
+                                        ans.find('qatext=['))].upper())
+                self.AnsCheck.append(ans[ans.find('qacheck=[')+9 : ans.find(']',
+                                         ans.find('qacheck=['))])
+                self.AnsNextQ.append(str(ans[ans.find('qn=[')+4 : ans.find(']',
+                                             ans.find('qn=['))]))
                 
             
     #     Класс локаций (в т.ч. чтение сценариев и формирование квестов данной локации в init)
@@ -601,10 +628,18 @@ try:
                 q_info = questinfo.split('\qa')[0]
                 self.Quests_list.append(Quest(q_info, q_ans_list))
             
-            self.ID = self.Location_info[self.Location_info.find('LID={')+5 : self.Location_info.find('}', self.Location_info.find('LID='))]
-            self.Name = self.Location_info[self.Location_info.find('LHello={')+8 : self.Location_info.find('}', self.Location_info.find('LHello='))]
-            self.ID_Name = self.Location_info[self.Location_info.find('LName={')+7 : self.Location_info.find('}', self.Location_info.find('LName='))]
-            self.Var = (self.Location_info[self.Location_info.find('LVar={')+6 : self.Location_info.find('}', self.Location_info.find('LVar='))])
+            self.ID = self.Location_info[self.Location_info.find('LID=[')+5 :
+                                         self.Location_info.find(']',
+                                         self.Location_info.find('LID='))]
+            self.Name = self.Location_info[self.Location_info.find('LHello=[')+8 :
+                                           self.Location_info.find(']',
+                                           self.Location_info.find('LHello='))]
+            self.ID_Name = self.Location_info[self.Location_info.find('LName=[')+7 :
+                                              self.Location_info.find(']',
+                                              self.Location_info.find('LName='))]
+            self.Var = (self.Location_info[self.Location_info.find('LVar=[')+6 :
+                                           self.Location_info.find(']',
+                                           self.Location_info.find('LVar='))])
             
             if self.Var == '':
                 self.Var = {}
@@ -649,5 +684,5 @@ try:
     
 except Exception as e:
     print(e)
-    with open(dir0+'log.txt','w') as log_e:
+    with open(os.path.join(dir0, 'log.txt'),'w') as log_e:
         log_e.write('ERROR! '+str(e))
